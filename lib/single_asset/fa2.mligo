@@ -15,6 +15,7 @@ type storage = Storage.t
 *)
 type atomic_trans = [@layout:comb] {
    to_      : address;
+   token_id : nat;
    amount   : nat;
 }
 
@@ -27,7 +28,7 @@ type transfer = transfer_from list
 let transfer (type a) (t:transfer) (s: a storage) : operation list * a storage =
    (* This function process the "tx" list. Since all transfer share the same "from_" address, we use a se *)
    let process_atomic_transfer (from_:address) (ledger, t:Ledger.t * atomic_trans) =
-      let {to_;amount=amount_} = t in
+      let {to_;token_id=_token_id;amount=amount_} = t in
       let ()     = Operators.assert_authorisation s.operators from_ in
       let ledger = Ledger.decrease_token_amount_for_user ledger from_ amount_ in
       let ledger = Ledger.increase_token_amount_for_user ledger to_   amount_ in

@@ -18,7 +18,7 @@ For example:
   ]) 
 ```
 
-## How it works?
+## How to use this library
 
 In order to use the library , one must import the library using a package manager. The ligo compiler uses `esy`.
 
@@ -29,7 +29,7 @@ In a `package.json` file, specify the library in the dependencies
 
 Install the library with ligo CLI (with docker)
 ```
-@docker run --platform linux/amd64 --rm -v "$PWD":"$PWD" -w "$PWD" ligolang/ligo:next install ligo-extendable-fa2
+ligo install ligo-extendable-fa2
 ```
 
 

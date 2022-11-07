@@ -1,8 +1,8 @@
-#import "./single_asset.instance.mligo" "SingleAsset"
+#import "./single_asset.extended.mligo" "ExtendedAsset"
 #import "./helpers/list.mligo" "List_helper"
 
-type ext = SingleAsset.extension
-type storage = SingleAsset.storage
+type ext = ExtendedAsset.extension
+type storage = ExtendedAsset.storage
 type extended_storage = ext storage
 
 let get_initial_storage (a, b, c : nat * nat * nat) =
@@ -49,13 +49,17 @@ let get_initial_storage (a, b, c : nat * nat * nat) =
       ledger         = ledger;
       token_metadata = token_metadata;
       operators      = operators;
-      extension      = "foo";
+      extension      = {
+        admin = owner1;
+        probationary_period = ("1970-01-01T00:00:01Z" : timestamp);
+      };
+
   } in
 
   initial_storage, owners, ops
 
 let assert_balances
-  (contract_address : (SingleAsset.parameter, extended_storage) typed_address )
+  (contract_address : (ExtendedAsset.parameter, extended_storage) typed_address )
   (a, b, c : (address * nat) * (address * nat) * (address * nat)) =
   let (owner1, balance1) = a in
   let (owner2, balance2) = b in
@@ -85,13 +89,13 @@ let test_atomic_tansfer_success =
   let op1    = List_helper.nth_exn 0 operators in
   let transfer_requests = ([
     ({from_=owner1; tx=([{to_=owner2;token_id=0n;amount=2n};{to_=owner3;token_id=0n;amount=3n}] :
-    SingleAsset.FA2.atomic_trans list)});
+    ExtendedAsset.FA2.atomic_trans list)});
     ({from_=owner2; tx=([{to_=owner3;token_id=0n;amount=2n};{to_=owner1;token_id=0n;amount=3n}] :
-    SingleAsset.FA2.atomic_trans list)});
-  ] : SingleAsset.FA2.transfer)
+    ExtendedAsset.FA2.atomic_trans list)});
+  ] : ExtendedAsset.FA2.transfer)
   in
   let () = Test.set_source op1 in
-  let (t_addr,_,_) = Test.originate SingleAsset.main initial_storage 0tez in
+  let (t_addr,_,_) = Test.originate ExtendedAsset.main initial_storage 0tez in
   let contr = Test.to_contract t_addr in
   let _ = Test.transfer_to_contract_exn contr (Transfer transfer_requests) 0tez in
   let () = assert_balances t_addr ((owner1, 8n), (owner2, 7n), (owner3, 15n)) in

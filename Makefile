@@ -15,19 +15,12 @@ compile = $(LIGO) compile contract --project-root ./lib ./lib/$(1) -o ./compiled
 test = @$(LIGO) run test $(project_root) ./test/$(1)
 # ^ run given test file
 
-compile: ##@Contracts - Compile LIGO contracts
-	@if [ ! -d ./compiled ]; then mkdir ./compiled ; fi
-	@echo "Compiling contracts..."
-	@$(call compile,single_asset/fa2.mligo,fa2.single_asset.tz)
-	@$(call compile,single_asset/fa2.mligo,fa2.single_asset.json,--michelson-format json)
-	@$(call compile,multi_asset/fa2.mligo,fa2.multi_asset.tz)
-	@$(call compile,multi_asset/fa2.mligo,fa2.multi_asset.json,--michelson-format json)
-
 
 .PHONY: test
 test: ## run tests (SUITE=single_asset make test)
 ifndef SUITE
 	@$(call test,single_asset.test.mligo)
+	@$(call test,single_asset.extended.test.mligo)
 	@$(call test,multi_asset.test.mligo)
 else
 	@$(call test,$(SUITE).test.mligo)

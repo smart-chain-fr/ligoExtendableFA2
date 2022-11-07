@@ -20,17 +20,17 @@ For example:
 
 ## How to use this library
 
-In order to use the library , one must import the library using a package manager. The ligo compiler uses `esy`.
-
-In a `package.json` file, specify the library in the dependencies
-```
-{ "dependencies": { "@ligo/fa": "^1.0.4", "ligo-extendable-fa2": "^1.0.1" } }
-```
-
 Install the library with ligo CLI (with docker)
 ```
 ligo install ligo-extendable-fa2
 ```
+This command will add a dependency in a `package.json` file. 
+
+Here is an example of the resulting `package.json` file.
+```
+{ "dependencies": { "@ligo/fa": "^1.0.4", "ligo-extendable-fa2": "^1.0.1" } }
+```
+
 
 
 

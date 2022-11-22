@@ -21,7 +21,7 @@ type atomic_trans = [@layout:comb] {
 
 type transfer_from = {
    from_ : address;
-   tx    : atomic_trans list
+   txs   : atomic_trans list
 }
 type transfer = transfer_from list
 
@@ -36,8 +36,8 @@ let transfer (type a) (t:transfer) (s: a storage) : operation list * a storage =
       ledger
    in
    let process_single_transfer (ledger, t:Ledger.t * transfer_from ) =
-      let {from_;tx} = t in
-      let ledger     = List.fold_left (process_atomic_transfer from_) ledger tx in
+      let {from_;txs} = t in
+      let ledger     = List.fold_left (process_atomic_transfer from_) ledger txs in
       ledger
    in
    let ledger = List.fold_left process_single_transfer s.ledger t in

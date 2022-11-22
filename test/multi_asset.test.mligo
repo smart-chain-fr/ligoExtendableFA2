@@ -83,7 +83,7 @@ let test_atomic_tansfer_success =
   let owner3 = List_helper.nth_exn 2 owners in
   let op1    = List_helper.nth_exn 0 operators in
   let transfer_requests = ([
-    ({from_=owner1; tx=([{to_=owner2;amount=2n;token_id=2n};] : MultiAsset.FA2.atomic_trans list)});
+    ({from_=owner1; txs=([{to_=owner2;amount=2n;token_id=2n};] : MultiAsset.FA2.atomic_trans list)});
   ] : MultiAsset.FA2.transfer)
   in
   let () = Test.set_source op1 in

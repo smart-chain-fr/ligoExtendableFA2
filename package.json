@@ -1,6 +1,7 @@
 {
   "name": "ligo-extendable-fa2",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "main": "./lib/main.mligo",
   "description": "Library of extendable FA2",
   "directories": {
     "lib": "lib",

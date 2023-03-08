@@ -40,7 +40,7 @@ let authorize_transfer (s : extended_storage) : unit =
     else
         ()
 
-let main (p, s : parameter * extended_storage) : operation list * extended_storage =
+let main (p : parameter) (s : extended_storage) : operation list * extended_storage =
     match p with
         Transfer                   p -> let _ = authorize_transfer s in
                                         FA2.transfer p s

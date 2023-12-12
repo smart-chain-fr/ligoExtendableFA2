@@ -95,8 +95,9 @@ let test_atomic_tansfer_success =
   ] : ExtendedAsset.FA2.transfer)
   in
   let () = Test.set_source op1 in
-  let (t_addr,_,_) = Test.originate ExtendedAsset.main initial_storage 0tez in
-  let contr = Test.to_contract t_addr in
+  // let (t_addr,_,_)
+  let result = Test.originate (contract_of ExtendedAsset) initial_storage 0tez in
+  let contr = Test.to_contract result.addr in
   let _ = Test.transfer_to_contract_exn contr (Transfer transfer_requests) 0tez in
-  let () = assert_balances t_addr ((owner1, 8n), (owner2, 7n), (owner3, 15n)) in
+  let () = assert_balances result.addr ((owner1, 8n), (owner2, 7n), (owner3, 15n)) in
   ()

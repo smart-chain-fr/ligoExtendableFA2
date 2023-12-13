@@ -10,7 +10,7 @@
 #import "ledger.mligo" "Ledger"
 
 type token_id = nat
-type 'a t = {
+type 'a t = [@layout comb] {
   metadata: Metadata.t;
   ledger : Ledger.t;
   token_metadata : TokenMetadata.t;

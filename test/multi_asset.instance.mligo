@@ -5,9 +5,9 @@ type extension = string
 type extended_storage = extension storage
 
 type parameter = [@layout:comb]
-    | Transfer of FA2.transfer
-    | Balance_of of FA2.balance_of
     | Update_operators of FA2.update_operators
+    | Balance_of of FA2.balance_of
+    | Transfer of FA2.transfer
 
 [@entry]
 let transfer (p: FA2.transfer) (s: extended_storage) : operation list * extended_storage =

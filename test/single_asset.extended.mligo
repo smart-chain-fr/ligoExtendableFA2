@@ -9,10 +9,10 @@ type extension = {
 
 type extended_storage = extension storage
 
-type parameter = [@layout:comb]
-    | Update_operators of FA2.update_operators
-    | Balance_of of FA2.balance_of
+type parameter = 
     | Transfer of FA2.transfer
+    | Balance_of of FA2.balance_of
+    | Update_operators of FA2.update_operators
 
 let is_operator (operators : FA2.Operators.t) (from_ : address) : bool =
   let sender_ = (Tezos.get_sender ()) in
@@ -52,13 +52,6 @@ let balance_of (p: FA2.balance_of) (s: extended_storage) : operation list * exte
 [@entry]
 let update_operators (p: FA2.update_operators) (s: extended_storage) : operation list * extended_storage =
   FA2.update_ops p s
-
-// let main (p, s : parameter * extended_storage) : operation list * extended_storage =
-//     match p with
-//         Transfer                   p -> let _ = authorize_transfer s in
-//                                         FA2.transfer p s
-//         | Balance_of               p -> FA2.balance_of p s
-//         | Update_operators         p -> FA2.update_ops p s
 
 let get_balance (s : extended_storage) (owner : address) (_token_id : nat) : nat =
     FA2.Ledger.get_for_user s.ledger owner

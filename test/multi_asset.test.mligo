@@ -51,23 +51,10 @@ let get_initial_storage (a, b, c : nat * nat * nat) =
     operators      = operators;
     extension      = "foo";
   } in
-
-  // let initial_storage = {
-  //   extension      = "foo";
-  //   ledger         = ledger;
-  //   metadata = Big_map.literal [
-  //       ("", Bytes.pack("tezos-storage:contents"));
-  //       ("contents", ("": bytes))
-  //   ];
-  //   operators      = operators;
-  //   token_metadata = token_metadata;
-  // } in
-  
-
   initial_storage, owners, ops
 
 let assert_balances
-  (contract_address : (MultiAsset.parameter, MultiAsset.extended_storage) typed_address )
+  (contract_address : ((MultiAsset parameter_of), MultiAsset.extended_storage) typed_address )
   (a, b, c : (address * nat * nat) * (address * nat * nat) * (address * nat * nat)) =
   let (owner1, token_id_1, balance1) = a in
   let (owner2, token_id_2, balance2) = b in

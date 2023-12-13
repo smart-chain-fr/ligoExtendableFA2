@@ -59,7 +59,7 @@ let get_initial_storage (a, b, c : nat * nat * nat) =
   initial_storage, owners, ops
 
 let assert_balances
-  (contract_address : (ExtendedAsset.parameter, extended_storage) typed_address )
+  (contract_address : ((ExtendedAsset parameter_of), extended_storage) typed_address )
   (a, b, c : (address * nat) * (address * nat) * (address * nat)) =
   let (owner1, balance1) = a in
   let (owner2, balance2) = b in
@@ -95,7 +95,6 @@ let test_atomic_tansfer_success =
   ] : ExtendedAsset.FA2.transfer)
   in
   let () = Test.set_source op1 in
-  // let (t_addr,_,_)
   let result = Test.originate (contract_of ExtendedAsset) initial_storage 0tez in
   let contr = Test.to_contract result.addr in
   let _ = Test.transfer_to_contract_exn contr (Transfer transfer_requests) 0tez in
